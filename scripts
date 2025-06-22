@@ -1,0 +1,73 @@
+📁 Folder: scripts/
+graphql
+Copy
+Edit
+scripts/
+├── deploy.sh         # Sync static website to S3
+├── validate.sh       # Confirm site is live and public
+└── setup.sh          # Optional: install AWS CLI & Terraform
+✅ 1. deploy.sh — Push Website to S3
+bash
+Copy
+Edit
+#!/bin/bash
+
+# Fail on error
+set -e
+
+# === CONFIG ===
+BUCKET_NAME="your-bucket-name"
+REGION="us-east-1"
+SOURCE_DIR="../website"
+
+echo "[+] Syncing local site to S3 bucket..."
+aws s3 sync "$SOURCE_DIR" "s3://$BUCKET_NAME" --delete --acl public-read --region "$REGION"
+
+echo "[+] Done. Your resume should be live at:"
+echo "    http://$BUCKET_NAME.s3-website-$REGION.amazonaws.com"
+💡 Make executable: chmod +x scripts/deploy.sh
+
+✅ 2. validate.sh — Check Site Health (basic)
+bash
+Copy
+Edit
+#!/bin/bash
+
+# === CONFIG ===
+URL="http://your-bucket-name.s3-website-us-east-1.amazonaws.com"
+
+echo "[+] Checking website status..."
+STATUS=$(curl -s -o /dev/null -w "%{http_code}" $URL)
+
+if [[ "$STATUS" == "200" ]]; then
+  echo "[✓] Site is live!"
+else
+  echo "[x] Site returned status: $STATUS"
+fi
+✅ 3. setup.sh — Install Terraform + AWS CLI (Optional for new EC2/labs)
+bash
+Copy
+Edit
+#!/bin/bash
+
+set -e
+
+echo "[+] Installing AWS CLI..."
+sudo yum install -y awscli
+
+echo "[+] Installing Terraform..."
+sudo yum install -y yum-utils
+sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+sudo yum -y install terraf
+terraform -v
+aws --version
+🔥 Bonus: CI/CD Ready
+These scripts can plug into GitHub Actions later to auto-deploy on every push. Want me to set that up too?
+
+
+
+
+
+
+
+
