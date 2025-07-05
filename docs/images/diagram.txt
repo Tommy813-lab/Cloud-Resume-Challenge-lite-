@@ -1,0 +1,11 @@
+User
+  │
+  ▼
+Amazon CloudFront (CDN)
+  │
+  ▼
+Amazon S3 (Static Website Hosting)
+  │
+  ├─────► AWS API Gateway ──► AWS Lambda ──► DynamoDB
+  │
+  └─────► (Static Assets: HTML, CSS, JS, images)
