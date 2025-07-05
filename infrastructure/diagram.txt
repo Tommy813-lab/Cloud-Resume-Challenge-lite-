@@ -1,0 +1,10 @@
+User Browser
+     |
+     v
+[CloudFront CDN]  <-- Distributes content globally with caching and HTTPS
+     |
+     v
+[S3 Bucket]       <-- Hosts static website files (HTML, CSS, JS, resume content)
+     |
+     v
+[EC2 Instance]    <-- Backend API or dynamic service (optional, e.g., form submissions)

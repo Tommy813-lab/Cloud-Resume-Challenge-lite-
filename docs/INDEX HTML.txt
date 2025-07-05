@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Cloud Resume</title>
+</head>
+<body>
+    <h1>My AWS Cloud Resume</h1>
+    <p>Visitor Count: <span id="counter">Loading...</span></p>
+</body>
+<script src="app.js"></script>
+</html>
